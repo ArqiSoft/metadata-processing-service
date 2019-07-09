@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+    indexing-service:
+        image: leanda/metadata-processing:${TAG_VERSION-latest}
+        build:
+            context: .
+            dockerfile: Sds.MetadataStorage.Processing/Dockerfile
+        environment:
+        - OSDR_LOG_FOLDER=/logs
+        - OSDR_MONGO_DB=mongodb://mongo:27017/osdr
+        - OSDR_RABBIT_MQ=rabbitmq://guest:guest@rabbitmq:5672/osdr_dev
+        - OSDR_EVENT_STORE=ConnectTo=tcp://admin:changeit@eventstore:1113
+        - OSDR_ES=http://elasticsearch:9200
+        - SWAGGER_BASEPATH=/osdr/v1
+        - OSDR_LOG_LEVEL=Warn
+        volumes:
+        - ${OSDR_LOG_FOLDER}:/logs
+        networks:
+        - leanda-ext
+        ports:
+        - "11050:11050"
+            
+networks:
+    leanda-ext:
+        external:
+            name: leanda-ext
