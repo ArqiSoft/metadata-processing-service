@@ -1,0 +1,58 @@
+version: '3.4'
+
+services:
+  rabbitmq:
+    image: leanda/rabbitmq
+    hostname: "leanda"
+    environment:
+      - RABBITMQ_DEFAULT_VHOST=leanda
+    ports:
+      - "8282:15672"
+      - "5672:5672"
+    networks:
+      - leanda-net
+
+  mongo:
+    image: mongo:3.6
+    ports:
+      - "27017:27017"
+    networks:
+      - leanda-net
+
+  metadata-service:
+    container_name: metadata-service
+    image: leanda/metadata-processing:${TAG_VERSION-latest}
+    entrypoint: /bin/bash
+    environment:
+      - OSDR_LOG_FOLDER=/logs
+      - OSDR_RABBIT_MQ=rabbitmq://guest:guest@rabbitmq:5672/leanda
+      - OSDR_MONGO_DB=mongodb://mongo:27017/leanda
+      - OSDR_LOG_LEVEL=${OSDR_LOG_LEVEL}
+    command: ./wait-for-it.sh rabbitmq:15672 -t 60 -- ./Sds.MetadataStorage.Processing
+    volumes:
+      - ${OSDR_LOG_FOLDER}:/logs
+    networks:
+      - leanda-net
+    depends_on:
+      - rabbitmq
+      - mongo
+
+  integration:
+    container_name: leandas-integration-tests
+    image: leanda/metadata-processing-tests:${TAG_VERSION-latest}
+    entrypoint: /bin/bash
+    environment:
+      - OSDR_LOG_FOLDER=/logs
+      - OSDR_MONGO_DB=mongodb://mongo:27017/leanda
+      - OSDR_GRID_FS=mongodb://mongo:27017/leanda
+      - OSDR_RABBIT_MQ=rabbitmq://guest:guest@rabbitmq:5672/leanda
+    command: ./wait-for-it.sh rabbitmq:15672 -t 60 -- dotnet vstest ./Sds.MetadataStorage.Tests.dll /logger:console;verbosity="normal"
+    volumes:
+      - ${OSDR_LOG_FOLDER}:/logs
+    networks:
+      - leanda-net
+    depends_on:
+      - metadata-service
+ 
+networks:
+    leanda-net:

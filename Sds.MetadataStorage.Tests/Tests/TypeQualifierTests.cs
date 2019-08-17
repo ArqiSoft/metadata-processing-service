@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Sds.MetadataStorage.Processing;
 using System;
 using System.Collections.Generic;
@@ -22,9 +23,9 @@ namespace Sds.MetadataStorage.Tests
             foreach (var s in strings)
                 tq.Qualify(s);
 
-            Assert.Equal("boolean", tq.DataType);
-            Assert.Null(tq.MaxValue);
-            Assert.Null(tq.MinValue);
+            tq.DataType.Should().Be("boolean");
+            tq.MaxValue.Should().BeNull();
+            tq.MinValue.Should().BeNull();
         }
 
         [Fact]
@@ -44,9 +45,9 @@ namespace Sds.MetadataStorage.Tests
             foreach (var s in strings)
                 tq.Qualify(s);
 
-            Assert.Equal("integer", tq.DataType);
-            Assert.Equal(ints.Max(), tq.MaxValue);
-            Assert.Equal(ints.Min(), tq.MinValue);
+            tq.DataType.Should().Be("integer");
+            tq.MaxValue.Should().Be(ints.Max());
+            tq.MinValue.Should().Be(ints.Min());
         }
 
         [Fact]
@@ -66,9 +67,9 @@ namespace Sds.MetadataStorage.Tests
             foreach (var s in strings)
                 tq.Qualify(s);
 
-            Assert.Equal("decimal", tq.DataType);
-            Assert.Equal(decimals.Max(), tq.MaxValue);
-            Assert.Equal(decimals.Min(), tq.MinValue);
+            tq.DataType.Should().Be("decimal");
+            tq.MaxValue.Should().Be(decimals.Max());
+            tq.MinValue.Should().Be(decimals.Min());
         }
 
         [Fact]
@@ -94,9 +95,9 @@ namespace Sds.MetadataStorage.Tests
             foreach (var s in strings)
                 tq.Qualify(s);
 
-            Assert.Equal("decimal", tq.DataType);
-            Assert.Equal(decimals.Max(), tq.MaxValue);
-            Assert.Equal(decimals.Min(), tq.MinValue);
+            tq.DataType.Should().Be("decimal");
+            tq.MaxValue.Should().Be(decimals.Max());
+            tq.MinValue.Should().Be(decimals.Min());
         }
 
         [Fact]
@@ -123,9 +124,9 @@ namespace Sds.MetadataStorage.Tests
             foreach (var s in strings)
                 tq.Qualify(s);
 
-            Assert.Equal("decimal", tq.DataType);
-            Assert.Equal(decimals.Max(), tq.MaxValue);
-            Assert.Equal(decimals.Min(), tq.MinValue);
+            tq.DataType.Should().Be("decimal");
+            tq.MaxValue.Should().Be(decimals.Max());
+            tq.MinValue.Should().Be(decimals.Min());
         }
 
         [Fact]
@@ -157,9 +158,9 @@ namespace Sds.MetadataStorage.Tests
             foreach (var s in strings)
                 tq.Qualify(s);
 
-            Assert.Equal("decimal", tq.DataType);
-            Assert.Equal(decimals.Max(), tq.MaxValue);
-            Assert.Equal(decimals.Min(), tq.MinValue);
+            tq.DataType.Should().Be("decimal");
+            tq.MaxValue.Should().Be(decimals.Max());
+            tq.MinValue.Should().Be(decimals.Min());
         }
 
         [Fact]
@@ -189,9 +190,9 @@ namespace Sds.MetadataStorage.Tests
             foreach (var s in strings)
                 tq.Qualify(s);
 
-            Assert.Equal("string", tq.DataType);
-            Assert.Null(tq.MaxValue);
-            Assert.Null(tq.MinValue);
+            tq.DataType.Should().Be("string");
+            tq.MaxValue.Should().BeNull();
+            tq.MinValue.Should().BeNull();
         }
 
         [Fact]
@@ -203,9 +204,9 @@ namespace Sds.MetadataStorage.Tests
             foreach (var s in strings)
                 tq.Qualify(s);
 
-            Assert.Equal("string", tq.DataType);
-            Assert.Null(tq.MaxValue);
-            Assert.Null(tq.MinValue);
+            tq.DataType.Should().Be("string");
+            tq.MaxValue.Should().BeNull();
+            tq.MinValue.Should().BeNull();
         }
     }
 }

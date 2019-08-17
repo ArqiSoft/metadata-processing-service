@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sds.MetadataStorage.Process
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sds.MetadataStorage.Domain", "Sds.MetadataStorage.Domain\Sds.MetadataStorage.Domain.csproj", "{95BF7F9C-5A01-49B0-98DD-D5234E6BE291}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sds.MetadataStorage.Tests", "Sds.MetadataStorage.Tests\Sds.MetadataStorage.Tests.csproj", "{A36B10DF-6053-4B6F-B01E-B284A239063D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sds.MetadataStorage.Tests", "Sds.MetadataStorage.Tests\Sds.MetadataStorage.Tests.csproj", "{DDDAE9B0-2935-41DA-9170-EC134F6509BD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{95BF7F9C-5A01-49B0-98DD-D5234E6BE291}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95BF7F9C-5A01-49B0-98DD-D5234E6BE291}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95BF7F9C-5A01-49B0-98DD-D5234E6BE291}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A36B10DF-6053-4B6F-B01E-B284A239063D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A36B10DF-6053-4B6F-B01E-B284A239063D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A36B10DF-6053-4B6F-B01E-B284A239063D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A36B10DF-6053-4B6F-B01E-B284A239063D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDDAE9B0-2935-41DA-9170-EC134F6509BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDDAE9B0-2935-41DA-9170-EC134F6509BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDDAE9B0-2935-41DA-9170-EC134F6509BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDDAE9B0-2935-41DA-9170-EC134F6509BD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

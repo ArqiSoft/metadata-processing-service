@@ -7,9 +7,7 @@ WORKDIR /build
 
 COPY . .
 
-RUN dotnet restore --configfile /build/Nuget.config Sds.MetadataStorage.WebApi/Sds.MetadataStorage.WebApi.csproj
-
-#RUN dotnet build Sds.MetadataStorage.WebApi/Sds.MetadataStorage.WebApi.csproj
+RUN dotnet restore Sds.MetadataStorage.WebApi/Sds.MetadataStorage.WebApi.csproj
 
 RUN dotnet publish Sds.MetadataStorage.WebApi/Sds.MetadataStorage.WebApi.csproj -r $RID -o /dist
 

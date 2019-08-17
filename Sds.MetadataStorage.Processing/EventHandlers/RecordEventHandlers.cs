@@ -1,6 +1,7 @@
 ﻿using MassTransit;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Sds.MetadataStorage.Domain.Events;
 using Sds.Osdr.RecordsFile.Domain.Events.Records;
 using System;
 using System.Linq;
@@ -47,6 +48,8 @@ namespace Sds.MetadataStorage.Processing.EventHandlers
 
                 await _metadataCollection.FindOneAndReplaceAsync(new BsonDocument("InfoBoxType", "chemical-properties"), metadata, new FindOneAndReplaceOptions<BsonDocument> { IsUpsert = true });
             }
+
+            await context.Publish<MetadataGenerated>(new { context.Message.Id });
         }
     }
 }

@@ -29,7 +29,6 @@ namespace Sds.MetadataStorage.Processing
         public static IConfigurationRoot Configuration { get; set; }
         private IServiceProvider Container { get; set; }
 
-
         public void Start()
         {
             var builder = new ConfigurationBuilder()
@@ -53,8 +52,13 @@ namespace Sds.MetadataStorage.Processing
             var services = new ServiceCollection();
             services.AddOptions();
             services.Configure<MassTransitSettings>(Configuration.GetSection("MassTransit"));
-            services.AddSingleton(new MongoClient(Environment.ExpandEnvironmentVariables(Configuration["OsdrConnectionSettings:ConnectionString"])));
-            services.AddScoped(service => service.GetService<MongoClient>().GetDatabase(Configuration["OsdrConnectionSettings:DatabaseName"]));
+
+            var mongoConnectionString = Environment.ExpandEnvironmentVariables(Configuration["MongoDb:ConnectionString"]);
+            var mongoUrl = new MongoUrl(mongoConnectionString);
+
+            Log.Information($"Connecting to MongoDB {mongoConnectionString}");
+            services.AddSingleton(new MongoClient(mongoUrl));
+            services.AddScoped(service => service.GetService<MongoClient>().GetDatabase(mongoUrl.DatabaseName));
 
             services.AddAllConsumers();
 

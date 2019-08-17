@@ -1,23 +1,20 @@
-﻿using System;
+﻿using Collector.Serilog.Enrichers.Assembly;
+using MassTransit;
+using MassTransit.RabbitMqTransport;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using Serilog;
-using IdentityModel.AspNetCore.OAuth2Introspection;
-using MassTransit;
-using MassTransit.RabbitMqTransport;
-using MongoDB.Driver;
-using Sds.MassTransit.Observers;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Serialization;
-using Collector.Serilog.Enrichers.Assembly;
-using Microsoft.Extensions.PlatformAbstractions;
-using IdentityServer4.AccessTokenValidation;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.AspNetCore.Http;
+using MongoDB.Driver;
+using Newtonsoft.Json.Serialization;
+using Sds.MassTransit.Observers;
+using Serilog;
+using System;
+using System.Threading.Tasks;
 
 namespace MetadataStorage
 {
@@ -55,12 +52,13 @@ namespace MetadataStorage
 
             try
             {
-                var connectionString = Environment.ExpandEnvironmentVariables(Configuration["OsdrConnectionSettings:ConnectionString"]);
-                Log.Information($"Connecting to MongoDB {connectionString}");
-                services.AddSingleton(new MongoClient(connectionString));
-                var database = Configuration["OsdrConnectionSettings:DatabaseName"];
-                Log.Information($"Using to MongoDB database {database}");
-                services.AddScoped(service => service.GetService<MongoClient>().GetDatabase(database));
+                var mongoConnectionString = Environment.ExpandEnvironmentVariables(Configuration["OsdrConnectionSettings:ConnectionString"]);
+                var mongoUrl = new MongoUrl(mongoConnectionString);
+
+                Log.Information($"Connecting to MongoDB {mongoConnectionString}");
+                services.AddSingleton(new MongoClient(mongoConnectionString));
+
+                services.AddScoped(service => service.GetService<MongoClient>().GetDatabase(mongoUrl.DatabaseName));
             }
             catch (Exception ex)
             {

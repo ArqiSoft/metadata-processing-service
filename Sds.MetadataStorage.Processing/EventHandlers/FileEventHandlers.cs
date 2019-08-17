@@ -3,7 +3,6 @@ using MongoDB.Bson;
 using MongoDB.Driver;
 using Sds.MetadataStorage.Domain.Commands;
 using Sds.MetadataStorage.Domain.Events;
-using Sds.Osdr.RecordsFile.Domain.Events.Files;
 using System;
 using System.Collections.Generic;
 using System.Linq;
